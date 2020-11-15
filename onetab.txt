@@ -1,0 +1,46 @@
+http://localhost:8888/tree | Home
+http://localhost:8888/tree/Desktop/Machine_Learning/subcellular_location | Desktop/Machine_Learning/subcellular_location/
+http://binds.cs.umass.edu/papers/1995_Siegelmann_Science.pdf | 0-1.pdf - 1995_Siegelmann_Science.pdf
+https://arxiv.org/abs/1412.7755 | [1412.7755] Multiple Object Recognition with Visual Attention
+https://arxiv.org/abs/1502.04623 | [1502.04623] DRAW: A Recurrent Neural Network For Image Generation
+https://iamtrask.github.io/2015/11/15/anyone-can-code-lstm/ | Anyone Can Learn To Code an LSTM-RNN in Python (Part 1: RNN) - i am trask
+http://karpathy.github.io/2015/05/21/rnn-effectiveness/ | The Unreasonable Effectiveness of Recurrent Neural Networks
+https://arxiv.org/pdf/1708.02182.pdf | Regularizing and Optimizing LSTM Language Models - 1708.02182.pdf
+https://colah.github.io/posts/2015-08-Backprop/ | Calculus on Computational Graphs: Backpropagation -- colah's blog
+https://pytorch.org/tutorials/beginner/nlp/sequence_models_tutorial.html | Sequence Models and Long-Short Term Memory Networks — PyTorch Tutorials 1.6.0 documentation
+http://colah.github.io/posts/2015-08-Understanding-LSTMs/ | Understanding LSTM Networks -- colah's blog
+https://gist.github.com/karpathy/d4dee566867f8291f086 | Minimal character-level language model with a Vanilla Recurrent Neural Network, in Python/numpy
+https://gist.github.com/karpathy/d4dee566867f8291f086 | Minimal character-level language model with a Vanilla Recurrent Neural Network, in Python/numpy
+http://localhost:8888/notebooks/Desktop/Machine_Learning/subcellular_location/numpy_LSTM.ipynb | numpy_LSTM
+
+http://localhost:8888/tree/Desktop/Machine_Learning/subcellular_location | Desktop/Machine_Learning/subcellular_location/
+http://binds.cs.umass.edu/papers/1995_Siegelmann_Science.pdf | 0-1.pdf - 1995_Siegelmann_Science.pdf
+https://arxiv.org/abs/1412.7755 | [1412.7755] Multiple Object Recognition with Visual Attention
+https://arxiv.org/abs/1502.04623 | [1502.04623] DRAW: A Recurrent Neural Network For Image Generation
+https://iamtrask.github.io/2015/11/15/anyone-can-code-lstm/ | Anyone Can Learn To Code an LSTM-RNN in Python (Part 1: RNN) - i am trask
+http://karpathy.github.io/2015/05/21/rnn-effectiveness/ | The Unreasonable Effectiveness of Recurrent Neural Networks
+https://arxiv.org/pdf/1708.02182.pdf | Regularizing and Optimizing LSTM Language Models - 1708.02182.pdf
+https://colah.github.io/posts/2015-08-Backprop/ | Calculus on Computational Graphs: Backpropagation -- colah's blog
+https://pytorch.org/tutorials/beginner/nlp/sequence_models_tutorial.html | Sequence Models and Long-Short Term Memory Networks — PyTorch Tutorials 1.6.0 documentation
+http://colah.github.io/posts/2015-08-Understanding-LSTMs/ | Understanding LSTM Networks -- colah's blog
+https://gist.github.com/karpathy/d4dee566867f8291f086 | Minimal character-level language model with a Vanilla Recurrent Neural Network, in Python/numpy
+http://localhost:8888/notebooks/Desktop/Machine_Learning/subcellular_location/numpy_LSTM.ipynb | numpy_LSTM
+https://www.codecademy.com/forum_questions/5384587e52f863dcb8001c82 | what is floor division // | Codecademy
+
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4640716/ | Continuous Distributed Representation of Biological Sequences for Deep Proteomics and Genomics
+http://www.bioinf.jku.at/publications/older/2604.pdf | nc.dvi - 2604.pdf
+https://arxiv.org/pdf/1906.03805v2.pdf | Improving Neural Language Modeling via Adversarial Training - 1906.03805v2.pdf
+https://gist.github.com/karpathy/d4dee566867f8291f086 | Minimal character-level language model with a Vanilla Recurrent Neural Network, in Python/numpy
+https://pytorch.org/tutorials/beginner/text_sentiment_ngrams_tutorial.html | Text Classification with TorchText — PyTorch Tutorials 1.6.0 documentation
+https://pytorch.org/docs/stable/_modules/torch/nn/modules/rnn.html#LSTM | torch.nn.modules.rnn — PyTorch 1.6.0 documentation
+https://github.com/salesforce/awd-lstm-lm/blob/master/model.py | awd-lstm-lm/model.py at master · salesforce/awd-lstm-lm
+https://github.com/salesforce/awd-lstm-lm | salesforce/awd-lstm-lm: LSTM and QRNN Language Model Toolkit for PyTorch
+https://colab.research.google.com/drive/1lp8_XzN4lDE9AVZSGoixya9Fnl0S_UMr#scrollTo=wf9nQvPkvXPt | pytorch_lm_proteins - Colaboratory
+
+https://accounts.binance.com/en/login?return_to=aHR0cHM6Ly93d3cuYmluYW5jZS5jb20vZW4vdXNlcmNlbnRlci9zZXR0aW5ncy9hcGktbWFuYWdlbWVudA== | Log In | Binance
+http://localhost:8888/tree/Documents/Freelancer/Simple%20Python%20script%20that%20will%20trade%20cryptocurrencies%20on%20my%20behalf. | Documents/Freelancer/Simple Python script that will trade cryptocurrencies on my behalf./
+https://github.com/binance-exchange/binance-official-api-docs/blob/master/rest-api.md#symbol-price-ticker | binance-official-api-docs/rest-api.md at master · binance-exchange/binance-official-api-docs
+http://localhost:8888/notebooks/Documents/Freelancer/Simple%20Python%20script%20that%20will%20trade%20cryptocurrencies%20on%20my%20behalf./Working_with_binance_api.ipynb | Working_with_binance_api
+https://github.com/sammchardy/python-binance/blob/master/binance/client.py | python-binance/client.py at master · sammchardy/python-binance
+https://github.com/sammchardy/python-binance/blob/master/binance/client.py | python-binance/client.py at master · sammchardy/python-binance
+
