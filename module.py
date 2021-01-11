@@ -47,7 +47,7 @@ class Module:
         for weight in weights:     
             if weight == 'Why':
                 size = (self.vocab_sz, self.hidden_sz)
-            elif weight == 'Wxh':
+            elif weight.startswith('Wx'):
                 size = (self.hidden_sz, self.vocab_sz)
             elif 'B' in weight and weight != 'By':
                 size = (self.hidden_sz, 1)
