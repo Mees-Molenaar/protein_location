@@ -14,8 +14,26 @@ char_to_idx = {char:i for i, char in enumerate(chars)}
 idx_to_char = {i:char for i, char in enumerate(chars)}
 
 class Module:
+    r"""
+    Parent class for recurrent neural networks (RNNs).
     
-    def __init__(self, seq_len, hidden_sz, vocab_sz):
+    This class is the base of RNNs (conventional RNN and Long short-term memory RNN).
+    It contains the initialization of the dictionaries containing the weights and gradients,
+    these weights and gradients are also initialized by this class.
+    Furthermore, it contains the reset method of the hidden layers. Most importantly, this 
+    class contains the training method. 
+    
+    Parameters
+    ----------
+    seq_len (int): Number of layers connected to each other.
+    hidden_sz (int): The number of features in the hidden state h.
+    vocab_sz (int): The nomber of possible inputs and outputs.
+    weights (list): List containing the names of the needed weights.
+    hidden (list): List containing the names of the needed hidden layers.
+    
+    
+    """
+    def __init__(self, seq_len, hidden_sz, vocab_sz, weights, hidden):
         self.seq_len = seq_len
         self.hidden_sz = hidden_sz
         self.vocab_sz = vocab_sz
@@ -25,8 +43,8 @@ class Module:
         self.sm_ps = dict()  # Dictionary of softmax pro values
         
         
-        self.make_hidden_dict(self.hidden_params)
-        self.make_params_dict(self.weight_params)
+        self.make_hidden_dict(hidden)
+        self.make_params_dict(weights)
         
         # Initialize weights, hidden and cell states.
         self.init_weights()
@@ -55,7 +73,7 @@ class Module:
                 size = (self.vocab_sz, 1)
             else:
                 size = (self.hidden_sz, self.hidden_sz)
-
+            
             self.params[weight] = {'size': size}
         
     def init_weights(self):
@@ -103,6 +121,11 @@ class Module:
     def update_grads(self, optimizer, lr):
         """
         Update gradients based on the optimizer you choose.
+        
+        Inputs
+        ------
+        optimizer (string): Optimizer you want to use to update the gradients.
+        lr (float): Learning rate used to optimize the gradients.
         """
 
         if optimizer == 'Adagrad':
@@ -155,6 +178,19 @@ class Module:
         """
         Train the model by chopping the data in sequences followed by performing
         the forward pass, backward pass and update the gradients.
+        
+        Inputs
+        ------
+        data (string): Data used to train the network.
+        optimizer (string): Optimizer you want to use to update the gradients
+        lr (float): Learning rate used to update the gradients.
+        epochs (int): The number of epochs to train the network.
+        progress (Boolean): If True, shows the progress of training the network.
+        
+        Outputs
+        -------
+        smooth_loss (float): The loss of the current trained network.
+        
         """
         self.losses = []
         smooth_loss = -np.log(1.0 / self.vocab_sz) * self.seq_len # Loss at iteration 0
@@ -198,35 +234,14 @@ class Module:
     def predict(self, start, n):
         """
         Predict a sequence of text based on a starting string.
+        
+        Inputs
+        ------
+        start (string): Sequence of characters that contain the start of the predicted text.
+        n (int): Length of the prediction.
+        
+        Outputs
+        -------
+        txt (string): A string that is predicted by the RNN.
         """
-        seed_idx = char_to_idx[start[-1]]
-        x = np.zeros((self.vocab_sz, 1))
-        x[seed_idx] = 1
-        
-        txt = [ch for ch in start]
-        
-        idxes = []
-        
-        h = self.hs[-1]
-        
-        for i in range(n):
-            
-            # Calculate the hidden
-            h = np.tanh(np.dot(self.Wxh, x) + np.dot(self.Whh, h) + self.bh)
-            # Calculate y
-            y = np.dot(self.Why, h) + self.by
-
-            sm_p = np.exp(y) / np.sum(np.exp(y)) # Softmax probabilty
-            # Determine character based on weighted probability (is using the softmax probability)
-            idx = np.random.choice(range(self.vocab_sz), p=sm_p.ravel())
-            idxes.append(idx)
-            
-            # Save X for next iteration
-            x = np.zeros((self.vocab_sz, 1))
-            x[idx] = 1
-            
-        prediction = [idx_to_char[idx] for idx in idxes]
-        
-        txt += prediction
-        
-        return txt
+        pass
