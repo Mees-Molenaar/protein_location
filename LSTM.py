@@ -11,6 +11,33 @@ def dsigmoid(x):
     return sigmoid(x) * (1 - sigmoid(x))
 
 class LSTM(Module):
+    r""" Long short-term memory (LSTM) class as a layer for an input sequence.
+
+        This class contains the forward and backward pass and prediction method to
+        calculate the various aspects of the LSTM layer. The layer is build on 
+        the Module class, which contains the initialization of the parameters.
+
+        Parameter
+        ---------
+        seq_len (int): Number of layers connected to each other.
+        hidden_sz (int): The number of features in the hidden state h.
+        vocab_sz (int): The number of possible input and outputs.
+
+        Inputs (forward/ backward)
+        --------------------------
+        xs (string): List of consecutive characters. The forward and backward pass are calculated for each character.
+        targets (string): List of the targets of each character (that is x + 1), since the next
+        character is predicted.
+
+        Inputs (predict)
+        ----------------
+        start (string): Start of a sentence that you want to use as start of your predicton.
+        n (int): Length of the prediction you want to perform
+
+        Output (predict)
+        ----------------
+        txt (string): A string that is predicted by the network.
+    """
     
     def __init__(self, seq_len, hidden_sz, vocab_sz):
         self.weight_params = ['Whf', 'Wxf', 'Whi', 'Wxi', 'Whc', 'Wxc'
@@ -22,7 +49,7 @@ class LSTM(Module):
 
     def forward(self, xs, targets):
         """
-        Forward pass LSTM
+        Forward pass LSTM.
         """
         
         y_preds = {}

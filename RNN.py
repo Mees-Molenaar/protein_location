@@ -9,34 +9,27 @@ class RNN(Module):
         and backward pass. The network is optimized using Adagrad.
         The train method is used to train the network.
         
-        Parameters
-        ----------
-        seq_len : Number of layers connected to each others. 
-        hidden_sz : The number of features in the hidden state h.
-        vocab_sz : The number of possible inputs and outputs.
-        
-        
-        Inputs (train)
-        --------------
-        data : Data used to train the network.
-        optimizer : The optimizer that is used to train the network.
-        lr : The learning rate used to train the network.
-        epochs : The number of epochs to train the network.
-        progress : If True, shows the progress of training the network.
-        
+        Parameter
+        ---------
+        seq_len (int): Number of layers connected to each other.
+        hidden_sz (int): The number of features in the hidden state h.
+        vocab_sz (int): The number of possible input and outputs.
+
+        Inputs (forward/ backward)
+        --------------------------
+        xs (string): List of consecutive characters. The forward and backward pass are calculated for each character.
+        targets (string): List of the targets of each character (that is x + 1), since the next
+        character is predicted.
+
         Inputs (predict)
         ----------------
-        start : Start of a sentence that the network uses as initial sequence.
-        n : Length of the prediction.   
-        
-        Output (train)
-        --------------
-        smooth_loss : The loss of the current trained network.
-        
+        start (string): Start of a sentence that you want to use as start of your predicton.
+        n (int): Length of the prediction you want to perform
+
         Output (predict)
         ----------------
-        txt : A string that is predicted by the RNN. 
-    """
+        txt (string): A string that is predicted by the network.
+        """
     
     def __init__(self, seq_len, hidden_sz, vocab_sz):
         self.weight_params = ['Wxh', 'Whh', 'Why', 'Bh', 'By']
