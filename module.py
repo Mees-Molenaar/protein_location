@@ -33,10 +33,11 @@ class Module:
     
     
     """
-    def __init__(self, seq_len, hidden_sz, vocab_sz, weights, hidden):
+    def __init__(self, seq_len, hidden_sz, vocab_sz, weights, hidden, embedding_dim):
         self.seq_len = seq_len
         self.hidden_sz = hidden_sz
         self.vocab_sz = vocab_sz
+        self.embedding_dim = embedding_dim
         
         self.params = dict() # Dictionary of parameters including weights and gradients
         self.hidden = dict() # Dictionary of hidden
@@ -66,7 +67,7 @@ class Module:
             if weight == 'Why':
                 size = (self.vocab_sz, self.hidden_sz)
             elif weight.startswith('Wx'):
-                size = (self.hidden_sz, self.vocab_sz)
+                size = (self.hidden_sz, self.embedding_dim)
             elif 'B' in weight and weight != 'By':
                 size = (self.hidden_sz, 1)
             elif 'B' in weight and weight == 'By':
@@ -75,6 +76,11 @@ class Module:
                 size = (self.hidden_sz, self.hidden_sz)
             
             self.params[weight] = {'size': size}
+
+        # And embedding
+
+        self.params['emb'] = {'size': (self.vocab_sz, self.embedding_dim)}
+
         
     def init_weights(self):
         """

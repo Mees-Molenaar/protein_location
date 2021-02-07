@@ -62,22 +62,24 @@ class LSTM(Module):
             x_vec = np.zeros((self.vocab_sz, 1)) 
             x_vec[x] = 1
             
+            # Embed the vector
+            embedded = np.dot(self.params['emb']['weight'].T, x_vec)
             
             # Calculate new hidden and cell state
             self.hidden['hf'][i] = np.dot(self.params['Whf']['weight'], self.hidden['hs'][i - 1]) \
-                                   + np.dot(self.params['Wxf']['weight'], x_vec) \
+                                   + np.dot(self.params['Wxf']['weight'], embedded) \
                                    + self.params['Bf']['bias']
             
             self.hidden['hi'][i] = np.dot(self.params['Whi']['weight'], self.hidden['hs'][i - 1]) \
-                                   + np.dot(self.params['Wxi']['weight'], x_vec) \
+                                   + np.dot(self.params['Wxi']['weight'], embedded) \
                                    + self.params['Bi']['bias']
             
             self.hidden['hc'][i] = np.dot(self.params['Whc']['weight'], self.hidden['hs'][i - 1]) \
-                                   + np.dot(self.params['Wxc']['weight'], x_vec) \
+                                   + np.dot(self.params['Wxc']['weight'], embedded) \
                                    + self.params['Bc']['bias']
             
             self.hidden['ho'][i] = np.dot(self.params['Who']['weight'], self.hidden['hs'][i - 1]) \
-                                   + np.dot(self.params['Wxo']['weight'], x_vec) \
+                                   + np.dot(self.params['Wxo']['weight'], embedded) \
                                    + self.params['Bo']['bias']
             
             
@@ -118,6 +120,9 @@ class LSTM(Module):
             x_vec = np.zeros((self.vocab_sz, 1))
             x_vec[x] = 1
             
+            # Embed the vector
+            embedded = np.dot(self.params['emb']['weight'].T, x_vec)
+
             dy = np.copy(self.sm_ps[i])
             dy[targets[i]] -= 1 # backprop into y. see http://cs231n.github.io/neural-networks-case-study/#grad if confused here
             
@@ -130,7 +135,7 @@ class LSTM(Module):
             do = dh * np.tanh(self.hidden['ct'][i]) # Weet dit niet zeker
             do = dsigmoid(self.hidden['ho'][i]) * do
             
-            self.params['Wxo']['grad'] += np.dot(do, x_vec.T)
+            self.params['Wxo']['grad'] += np.dot(do, embedded.T)
             self.params['Who']['grad'] += np.dot(do, self.hidden['hs'][i-1].T)
             self.params['Bo']['grad'] += do
             
@@ -144,7 +149,7 @@ class LSTM(Module):
             # C branches to next layer, therefore we need the gradient of that layer added.
             dcwave_t = dcwave_t * (1-np.square(np.tanh(self.hidden['hc'][i])))
             
-            self.params['Wxc']['grad'] += np.dot(dcwave_t, x_vec.T)
+            self.params['Wxc']['grad'] += np.dot(dcwave_t, embedded.T)
             self.params['Whc']['grad'] += np.dot(dcwave_t, self.hidden['hs'][i-1].T)
             self.params['Bc']['grad'] += dcwave_t
             
@@ -152,7 +157,7 @@ class LSTM(Module):
             di = sigmoid(self.hidden['hc'][i]) * dc
             di = di * dsigmoid(self.hidden['hi'][i])
             
-            self.params['Wxi']['grad'] += np.dot(di, x_vec.T)
+            self.params['Wxi']['grad'] += np.dot(di, embedded.T)
             self.params['Whi']['grad'] += np.dot(di, self.hidden['hs'][i-1].T)
             self.params['Bi']['grad'] += di
             
@@ -160,10 +165,19 @@ class LSTM(Module):
             df = self.hidden['ct'][i-1] * dc
             df = dsigmoid(self.hidden['hf'][i]) * df
             
-            self.params['Wxf']['grad'] += np.dot(df, x_vec.T)
+            self.params['Wxf']['grad'] += np.dot(df, embedded.T)
             self.params['Whf']['grad'] += np.dot(df, self.hidden['hs'][i-1].T)
             self.params['Bf']['grad'] += df
             
+
+            # Calculating gradient for embedding
+            dq = np.dot(self.params['Wxf']['weight'].T, df) + \
+                np.dot(self.params['Wxi']['weight'].T, di) + \
+                np.dot(self.params['Wxc']['weight'].T, dcwave_t) + \
+                np.dot(self.params['Wxo']['weight'].T, do)
+            
+            self.params['emb']['grad'] += (np.dot(dq, x_vec.T)).T
+
         # Clip to prevent exploding gradients
         for dparam in self.params.keys():
             np.clip(self.params[dparam]['grad'], -5, 5, out=self.params[dparam]['grad'])
@@ -184,21 +198,25 @@ class LSTM(Module):
         ct = self.hidden['ct'][-1]
         
         for _ in range(n):
+
+            # Embed the vector
+            embedded = np.dot(self.params['emb']['weight'].T, x)
+
             # Calculate new hidden and cell state
             hf = np.dot(self.params['Whf']['weight'], hs) \
-                                   + np.dot(self.params['Wxf']['weight'], x) \
+                                   + np.dot(self.params['Wxf']['weight'], embedded) \
                                    + self.params['Bf']['bias']
 
             hi = np.dot(self.params['Whi']['weight'], hs) \
-                                   + np.dot(self.params['Wxi']['weight'], x) \
+                                   + np.dot(self.params['Wxi']['weight'], embedded) \
                                    + self.params['Bi']['bias']
 
             hc = np.dot(self.params['Whc']['weight'], hs) \
-                                   + np.dot(self.params['Wxc']['weight'], x) \
+                                   + np.dot(self.params['Wxc']['weight'], embedded) \
                                    + self.params['Bc']['bias']
 
             ho = np.dot(self.params['Who']['weight'], hs) \
-                                   + np.dot(self.params['Wxo']['weight'], x) \
+                                   + np.dot(self.params['Wxo']['weight'], embedded) \
                                    + self.params['Bo']['bias']
 
 

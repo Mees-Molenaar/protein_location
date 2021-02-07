@@ -35,7 +35,8 @@ class RNN(Module):
         self.weight_params = ['Wxh', 'Whh', 'Why', 'Bh', 'By']
         self.hidden_params = ['hs']
         
-        super().__init__(seq_len, hidden_sz, vocab_sz)
+        super().__init__(seq_len, hidden_sz, vocab_sz, self.weight_params,
+        self.hidden_params, embedding_dim)
         
     def forward(self, xs, targets):
         """
@@ -51,8 +52,10 @@ class RNN(Module):
             x_vec = np.zeros((self.vocab_sz, 1)) # vectorize the input
             x_vec[x] = 1
 
+            embedded = np.dot(self.params['emb']['weight'].T, x_vec)
+
             # Calculate the new hidden, which is based on the input and the previous hidden layer
-            self.hidden['hs'][i] = np.tanh(np.dot(self.params['Wxh']['weight'], x_vec)
+            self.hidden['hs'][i] = np.tanh(np.dot(self.params['Wxh']['weight'], embedded)
                                 + np.dot(self.params['Whh']['weight'], self.hidden['hs'][i - 1]) 
                                 + self.params['Bh']['bias'])
             # Predict y
@@ -79,6 +82,9 @@ class RNN(Module):
             x_vec = np.zeros((self.vocab_sz, 1))
             x_vec[x] = 1
 
+            # Embed the vector
+            embedded = np.dot(self.params['emb']['weight'].T, x_vec)
+
             dy = np.copy(self.sm_ps[i])
             dy[targets[i]] -= 1 # backprop into y. see http://cs231n.github.io/neural-networks-case-study/#grad if confused here
 
@@ -91,6 +97,10 @@ class RNN(Module):
             self.params['Bh']['grad'] += dhraw
             dhnext = np.dot(self.params['Whh']['weight'].T, dhraw)
 
+            # Back to embedding
+            dq = np.dot(self.params['Wxh']['weight'].t, dhraw)
+            self.params['emb']['grad'] += (np.dot(dq, x_vec.T)).T
+
         # Clip to prevent exploding gradients
         for dparam in self.params.keys():
             np.clip(self.params[dparam]['grad'], -5, 5, out=self.params[dparam]['grad'])
@@ -99,6 +109,7 @@ class RNN(Module):
         """
         Predict a sequence of text based on a starting string.
         """
+        # Vectorize the input
         seed_idx = char_to_idx[start[-1]]
         x = np.zeros((self.vocab_sz, 1))
         x[seed_idx] = 1
@@ -110,6 +121,9 @@ class RNN(Module):
         h = self.hidden['hs'][-1]
         
         for _ in range(n):
+
+            # Embed the vector
+            embedded = np.dot(self.params['emb']['weight'].T, x) = 1
             
             # Calculate the hidden
             h = np.tanh(np.dot(self.params['Wxh']['weight'], x) \
