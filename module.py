@@ -76,6 +76,11 @@ class Module:
                 size = (self.hidden_sz, self.hidden_sz)
             
             self.params[weight] = {'size': size}
+
+        # And embedding
+
+        self.params['emb'] = {'size': (self.vocab_sz, self.embedding_dim)}
+
         
     def init_weights(self):
         """
