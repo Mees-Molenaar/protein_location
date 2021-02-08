@@ -39,9 +39,9 @@ df = pd.DataFrame(data, columns=columns)
 
 # Save dataframe as csv in the raw data folder
 today = date.today()
-file_name = f'protein_data_{today}'
+file_name = f'protein_data_{today}.csv'
 dir_name = '/home/mees/Desktop/Machine_Learning/subcellular_location/data/raw'
 
 file_path = Path(dir_name, file_name) 
 
-df.to_csv(file_path, sep=';')
+df.to_csv(file_path, sep=';', index=False)
