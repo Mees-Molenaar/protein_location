@@ -13,16 +13,16 @@ After making the RNN and LSTM myself. I used PyTorch to create the AWD-LSTM and 
 
 ## Work in progress
 
- * Train the Language model longer
- * Use a reference paper for measuring if it improves a benchmark 
- * Improve the models
-    * Adding dropouts
-    * Last hidden layer
-    * Improve pooling
-    * Training in batches
-    * Probably more to come
+* Train the Language model longer
+* Use a reference paper for measuring if it improves a benchmark
+* Improve the models
+  * Adding dropouts
+  * Last hidden layer
+  * Improve pooling
+  * Training in batches
+  * Probably more to come
 
 ## References
 
-> https://arxiv.org/abs/1708.02182 : Regularizing and Optimizing LSTM Language Models
-> https://arxiv.org/abs/1801.06146 : Universal Language Model Fine-tuning for Text Classification
+><https://arxiv.org/abs/1708.02182> Regularizing and Optimizing LSTM Language Models
+><https://arxiv.org/abs/1801.06146> Universal Language Model Fine-tuning for Text Classification
